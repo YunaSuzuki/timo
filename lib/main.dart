@@ -33,12 +33,25 @@ class ProfilePage extends StatelessWidget {
         padding: EdgeInsets.only(left: 30.0, right: 30.0),
         child: Column(
           children: <Widget>[
+            Center(
+              child: SizedBox(
+                width: 150,
+                height: 150,
+                child: ClipOval(
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                    child: Image.asset('assets/images/pet_profile_image.JPG'),
+                  ),
+                ),
+              ),
+            ),
             //ProfileImage
             Center(
-              child: Text('Timo', style: profileTextStyle,),
+              child: Text('Timo', style: profileNameStyle,),
             ), //pet's name
             Center(
-              child: Text('@username', style: profileTextStyle,),
+              child: Text('@username', style: sTextStyle,),
             ),
             SizedBox(height: 40.0,),
             SizedBox(
