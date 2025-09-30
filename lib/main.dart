@@ -30,7 +30,7 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 30.0),
+        padding: EdgeInsets.only(left: 30.0, right: 30.0),
         child: Column(
           children: <Widget>[
             //ProfileImage
@@ -41,51 +41,50 @@ class ProfilePage extends StatelessWidget {
               child: Text('@username', style: profileTextStyle,),
             ),
             SizedBox(height: 40.0,),
-            Table(
-              children: <TableRow>[
-                TableRow(
-                  children: <Widget>[
-                    TableCell(child: Text('お誕生日', style: profileTextStyle,)),
-                    TableCell(child: Text('2021/06/24', style: profileTextStyle,)),
-                  ],
-                ),
-                TableRow(
-                  children: <Widget>[
-                    TableCell(child: Text('犬種', style: profileTextStyle,)),
-                    TableCell(child: Text('柴犬', style: profileTextStyle,)),
-                  ],
-                ),
-                TableRow(
-                  children: <Widget>[
-                    TableCell(child: Text('好きなこと', style: profileTextStyle,)),
-                    TableCell(child: Text('おやつ・家族', style: profileTextStyle,)),
-                  ],
-                ),
-                TableRow(
-                  children: <Widget>[
-                    TableCell(child: Text('嫌いなこと', style: profileTextStyle,)),
-                    TableCell(child: Text('お風呂', style: profileTextStyle,)),
-                  ],
-                ),
-                TableRow(
-                  children: <Widget>[
-                    TableCell(
-                      child: Text('去勢・避妊', style: profileTextStyle,)
-                    ),
-                    TableCell(child: Text('済', style: profileTextStyle,)),
-                  ],
-                ),
-                TableRow(
-                  children: <Widget>[
-                    TableCell(
-                        child: Text('飼い主さんからコメント', style: profileTextStyle,)
-                    ),
-                    TableCell(
-                        child: Text('')
-                    ),
-                  ],
-                ),
-              ],
+            SizedBox(
+              height: 250,
+              child: LayoutGrid(
+                columnSizes: [1.fr, 1.fr],
+                rowSizes: [1.fr, 1.fr, 1.fr, 1.fr, 1.fr, 1.fr, 1.fr],
+                children: <Widget>[
+                  Container(
+                    child: Text('お誕生日', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 0, rowStart: 0),
+                  Container(
+                    child: Text('2021/06/24', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 1, rowStart: 0),
+                  Container(
+                    child: Text('犬種', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 0, rowStart: 1),
+                  Container(
+                    child: Text('柴犬', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 1, rowStart: 1),
+                  Container(
+                    child: Text('好きなこと', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 0, rowStart: 2),
+                  Container(
+                    child: Text('家族・おやつ', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 1, rowStart: 2),
+                  Container(
+                    child: Text('嫌いなこと', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 0, rowStart: 3),
+                  Container(
+                    child: Text('お風呂', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 1, rowStart: 3),
+                  Container(
+                    child: Text('去勢・避妊', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 0, rowStart: 4),
+                  Container(
+                    child: Text('済', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 1, rowStart: 4),
+                  Container(
+                    child: Text('飼い主さんから', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 0, rowStart: 5, columnSpan: 2),
+                  Container(
+                    child: Text('サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト', style: profileTextStyle,),
+                  ).withGridPlacement(columnStart: 0, rowStart: 6, columnSpan: 2),
+                ],
+              ),
             ),
           ],
         ),
