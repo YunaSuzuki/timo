@@ -78,9 +78,29 @@ class PetListPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 30.0,), //header and profile image
-            //______________________________
-
-            //_____________________________
+            Container(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 40,
+                    child: LayoutGrid(
+                      columnSizes: [180.px, 1.fr],
+                      rowSizes: [1.fr, 1.fr],
+                      children: <Widget>[
+                        Container().withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                        Container(
+                          child: Text('ティモの柴旅日記', style: profileTextStyle,),
+                        ).withGridPlacement(columnStart: 1, rowStart: 0),
+                        Container(
+                          child: Text('@username', style: sTextStyle,),
+                        ).withGridPlacement(columnStart: 1, rowStart: 1),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 28.0,),
             Container(
               padding: EdgeInsets.only(left: 30.0, right: 30.0),
               child: Row(
@@ -90,7 +110,7 @@ class PetListPage extends StatelessWidget {
                     onPressed: () {},
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10), // inner padding
+                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 10), // inner padding
                     ),
                     child: Text("Follow", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.0),),
                   ),
@@ -118,6 +138,7 @@ class PetListPage extends StatelessWidget {
                     child: LayoutGrid(
                       columnSizes: [auto, 1.fr],
                       rowSizes: [1.fr, 1.fr],
+                      columnGap: 16,
                       children: <Widget>[
                         Container(
                           child: SizedBox(
@@ -153,6 +174,7 @@ class PetListPage extends StatelessWidget {
                     child: LayoutGrid(
                       columnSizes: [auto, 1.fr],
                       rowSizes: [1.fr, 1.fr],
+                      columnGap: 16,
                       children: <Widget>[
                         Container(
                           child: SizedBox(
@@ -188,6 +210,7 @@ class PetListPage extends StatelessWidget {
                     child: LayoutGrid(
                       columnSizes: [auto, 1.fr],
                       rowSizes: [1.fr, 1.fr],
+                      columnGap: 16,
                       children: <Widget>[
                         Container(
                           child: SizedBox(
