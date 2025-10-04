@@ -3,6 +3,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:timo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:timo/components/bottomNavigationBar.dart';
+import 'package:timo/screen/pet_profile_page.dart';
 
 class PetListPage extends StatelessWidget {
 
@@ -134,208 +135,248 @@ class PetListPage extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.only(left: 28.0, right: 12.0),
                 children: <Widget>[
-                  Container(
-                    height: 80,
-                    child: LayoutGrid(
-                      columnSizes: [auto, 1.fr],
-                      rowSizes: [1.fr, 1.fr],
-                      columnGap: 16,
-                      children: <Widget>[
-                        Container(
-                          child: SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: ClipOval(
-                              child: FittedBox(
-                                fit: BoxFit.cover,
-                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
-                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfilePage())
+                      );
+                    },
+                    child: Container(
+                      height: 80,
+                      child: LayoutGrid(
+                        columnSizes: [auto, 1.fr],
+                        rowSizes: [1.fr, 1.fr],
+                        columnGap: 16,
+                        children: <Widget>[
+                          Container(
+                            child: SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: ClipOval(
+                                child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                  child: Image.asset('assets/images/pet_profile_image.JPG'),
+                                ),
                               ),
                             ),
-                          ),
-                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text('Timo', style: profileTextStyle,),
-                              Icon(Icons.female, color: Colors.red[400],),
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 0),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text('柴犬', style: profileTextStyle,),
-                              Text('/', style: profileTextStyle,),
-                              Text('4歳', style: profileTextStyle,)
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 1),
-                      ],
+                          ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text('Timo', style: profileTextStyle,),
+                                Icon(Icons.female, color: Colors.red[400],),
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 0),
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                Text('柴犬', style: profileTextStyle,),
+                                Text('/', style: profileTextStyle,),
+                                Text('4歳', style: profileTextStyle,)
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 1),
+                        ],
+                      ),
                     ),
                   ),
                   Container(height: 16.0,),
-                  Container(
-                    height: 80,
-                    child: LayoutGrid(
-                      columnSizes: [auto, 1.fr],
-                      rowSizes: [1.fr, 1.fr],
-                      columnGap: 16,
-                      children: <Widget>[
-                        Container(
-                          child: SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: ClipOval(
-                              child: FittedBox(
-                                fit: BoxFit.cover,
-                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
-                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfilePage())
+                      );
+                    },
+                    child: Container(
+                      height: 80,
+                      child: LayoutGrid(
+                        columnSizes: [auto, 1.fr],
+                        rowSizes: [1.fr, 1.fr],
+                        columnGap: 16,
+                        children: <Widget>[
+                          Container(
+                            child: SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: ClipOval(
+                                child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                  child: Image.asset('assets/images/pet_profile_image.JPG'),
+                                ),
                               ),
                             ),
-                          ),
-                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text('Timo', style: profileTextStyle,),
-                              Icon(Icons.female, color: Colors.red[400],),
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 0),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text('柴犬', style: profileTextStyle,),
-                              Text('/', style: profileTextStyle,),
-                              Text('4歳', style: profileTextStyle,)
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 1),
-                      ],
+                          ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text('Timo', style: profileTextStyle,),
+                                Icon(Icons.female, color: Colors.red[400],),
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 0),
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                Text('柴犬', style: profileTextStyle,),
+                                Text('/', style: profileTextStyle,),
+                                Text('4歳', style: profileTextStyle,)
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 1),
+                        ],
+                      ),
                     ),
                   ),
                   Container(height: 16.0,),
-                  Container(
-                    height: 80,
-                    child: LayoutGrid(
-                      columnSizes: [auto, 1.fr],
-                      rowSizes: [1.fr, 1.fr],
-                      columnGap: 16,
-                      children: <Widget>[
-                        Container(
-                          child: SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: ClipOval(
-                              child: FittedBox(
-                                fit: BoxFit.cover,
-                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
-                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfilePage())
+                      );
+                    },
+                    child: Container(
+                      height: 80,
+                      child: LayoutGrid(
+                        columnSizes: [auto, 1.fr],
+                        rowSizes: [1.fr, 1.fr],
+                        columnGap: 16,
+                        children: <Widget>[
+                          Container(
+                            child: SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: ClipOval(
+                                child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                  child: Image.asset('assets/images/pet_profile_image.JPG'),
+                                ),
                               ),
                             ),
-                          ),
-                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text('Timo', style: profileTextStyle,),
-                              Icon(Icons.female, color: Colors.red[400],),
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 0),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text('柴犬', style: profileTextStyle,),
-                              Text('/', style: profileTextStyle,),
-                              Text('4歳', style: profileTextStyle,)
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 1),
-                      ],
+                          ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text('Timo', style: profileTextStyle,),
+                                Icon(Icons.female, color: Colors.red[400],),
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 0),
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                Text('柴犬', style: profileTextStyle,),
+                                Text('/', style: profileTextStyle,),
+                                Text('4歳', style: profileTextStyle,)
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 1),
+                        ],
+                      ),
                     ),
                   ),
                   Container(height: 16.0,),
-                  Container(
-                    height: 80,
-                    child: LayoutGrid(
-                      columnSizes: [auto, 1.fr],
-                      rowSizes: [1.fr, 1.fr],
-                      columnGap: 16,
-                      children: <Widget>[
-                        Container(
-                          child: SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: ClipOval(
-                              child: FittedBox(
-                                fit: BoxFit.cover,
-                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
-                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfilePage())
+                      );
+                    },
+                    child: Container(
+                      height: 80,
+                      child: LayoutGrid(
+                        columnSizes: [auto, 1.fr],
+                        rowSizes: [1.fr, 1.fr],
+                        columnGap: 16,
+                        children: <Widget>[
+                          Container(
+                            child: SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: ClipOval(
+                                child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                  child: Image.asset('assets/images/pet_profile_image.JPG'),
+                                ),
                               ),
                             ),
-                          ),
-                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text('Timo', style: profileTextStyle,),
-                              Icon(Icons.female, color: Colors.red[400],),
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 0),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text('柴犬', style: profileTextStyle,),
-                              Text('/', style: profileTextStyle,),
-                              Text('4歳', style: profileTextStyle,)
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 1),
-                      ],
+                          ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text('Timo', style: profileTextStyle,),
+                                Icon(Icons.female, color: Colors.red[400],),
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 0),
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                Text('柴犬', style: profileTextStyle,),
+                                Text('/', style: profileTextStyle,),
+                                Text('4歳', style: profileTextStyle,)
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 1),
+                        ],
+                      ),
                     ),
                   ),
                   Container(height: 16.0,),
-                  Container(
-                    height: 80,
-                    child: LayoutGrid(
-                      columnSizes: [auto, 1.fr],
-                      rowSizes: [1.fr, 1.fr],
-                      columnGap: 16,
-                      children: <Widget>[
-                        Container(
-                          child: SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: ClipOval(
-                              child: FittedBox(
-                                fit: BoxFit.cover,
-                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
-                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfilePage())
+                      );
+                    },
+                    child: Container(
+                      height: 80,
+                      child: LayoutGrid(
+                        columnSizes: [auto, 1.fr],
+                        rowSizes: [1.fr, 1.fr],
+                        columnGap: 16,
+                        children: <Widget>[
+                          Container(
+                            child: SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: ClipOval(
+                                child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                  child: Image.asset('assets/images/pet_profile_image.JPG'),
+                                ),
                               ),
                             ),
-                          ),
-                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
-                        Container(
-                          child: Row(
-                            children: [
-                              Text('Timo', style: profileTextStyle,),
-                              Icon(Icons.female, color: Colors.red[400],),
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 0),
-                        Container(
-                          child: Row(
-                            children: <Widget>[
-                              Text('柴犬', style: profileTextStyle,),
-                              Text('/', style: profileTextStyle,),
-                              Text('4歳', style: profileTextStyle,)
-                            ],
-                          ),
-                        ).withGridPlacement(columnStart: 1, rowStart: 1),
-                      ],
+                          ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text('Timo', style: profileTextStyle,),
+                                Icon(Icons.female, color: Colors.red[400],),
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 0),
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                Text('柴犬', style: profileTextStyle,),
+                                Text('/', style: profileTextStyle,),
+                                Text('4歳', style: profileTextStyle,)
+                              ],
+                            ),
+                          ).withGridPlacement(columnStart: 1, rowStart: 1),
+                        ],
+                      ),
                     ),
                   ),
                 ],
