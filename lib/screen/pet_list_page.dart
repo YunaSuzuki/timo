@@ -344,6 +344,7 @@ class PetListPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.grey[900],), label: 'Home', ),
           BottomNavigationBarItem(icon: Icon(Icons.search, color: Colors.grey[900],), label: 'Search'),
