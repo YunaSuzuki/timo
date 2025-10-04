@@ -129,11 +129,11 @@ class PetListPage extends StatelessWidget {
               ),
             ), //TextButton
             SizedBox(height: 30.0,),
-            Container(
-              padding: EdgeInsets.only(left: 30.0, right: 30.0),
-              child: Column(
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.only(left: 28.0, right: 12.0),
                 children: <Widget>[
-                  SizedBox(
+                  Container(
                     height: 80,
                     child: LayoutGrid(
                       columnSizes: [auto, 1.fr],
@@ -154,7 +154,12 @@ class PetListPage extends StatelessWidget {
                           ),
                         ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
                         Container(
-                          child: Text('Timo', style: profileTextStyle,),
+                          child: Row(
+                            children: [
+                              Text('Timo', style: profileTextStyle,),
+                              Icon(Icons.female, color: Colors.red[400],),
+                            ],
+                          ),
                         ).withGridPlacement(columnStart: 1, rowStart: 0),
                         Container(
                           child: Row(
@@ -168,8 +173,8 @@ class PetListPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 12.0,),
-                  SizedBox(
+                  Container(height: 16.0,),
+                  Container(
                     height: 80,
                     child: LayoutGrid(
                       columnSizes: [auto, 1.fr],
@@ -190,7 +195,12 @@ class PetListPage extends StatelessWidget {
                           ),
                         ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
                         Container(
-                          child: Text('Timo', style: profileTextStyle,),
+                          child: Row(
+                            children: [
+                              Text('Timo', style: profileTextStyle,),
+                              Icon(Icons.female, color: Colors.red[400],),
+                            ],
+                          ),
                         ).withGridPlacement(columnStart: 1, rowStart: 0),
                         Container(
                           child: Row(
@@ -204,8 +214,8 @@ class PetListPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 12.0,),
-                  SizedBox(
+                  Container(height: 16.0,),
+                  Container(
                     height: 80,
                     child: LayoutGrid(
                       columnSizes: [auto, 1.fr],
@@ -226,7 +236,94 @@ class PetListPage extends StatelessWidget {
                           ),
                         ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
                         Container(
-                          child: Text('Timo', style: profileTextStyle,),
+                          child: Row(
+                            children: [
+                              Text('Timo', style: profileTextStyle,),
+                              Icon(Icons.female, color: Colors.red[400],),
+                            ],
+                          ),
+                        ).withGridPlacement(columnStart: 1, rowStart: 0),
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Text('柴犬', style: profileTextStyle,),
+                              Text('/', style: profileTextStyle,),
+                              Text('4歳', style: profileTextStyle,)
+                            ],
+                          ),
+                        ).withGridPlacement(columnStart: 1, rowStart: 1),
+                      ],
+                    ),
+                  ),
+                  Container(height: 16.0,),
+                  Container(
+                    height: 80,
+                    child: LayoutGrid(
+                      columnSizes: [auto, 1.fr],
+                      rowSizes: [1.fr, 1.fr],
+                      columnGap: 16,
+                      children: <Widget>[
+                        Container(
+                          child: SizedBox(
+                            width: 80,
+                            height: 80,
+                            child: ClipOval(
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                              ),
+                            ),
+                          ),
+                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                        Container(
+                          child: Row(
+                            children: [
+                              Text('Timo', style: profileTextStyle,),
+                              Icon(Icons.female, color: Colors.red[400],),
+                            ],
+                          ),
+                        ).withGridPlacement(columnStart: 1, rowStart: 0),
+                        Container(
+                          child: Row(
+                            children: <Widget>[
+                              Text('柴犬', style: profileTextStyle,),
+                              Text('/', style: profileTextStyle,),
+                              Text('4歳', style: profileTextStyle,)
+                            ],
+                          ),
+                        ).withGridPlacement(columnStart: 1, rowStart: 1),
+                      ],
+                    ),
+                  ),
+                  Container(height: 16.0,),
+                  Container(
+                    height: 80,
+                    child: LayoutGrid(
+                      columnSizes: [auto, 1.fr],
+                      rowSizes: [1.fr, 1.fr],
+                      columnGap: 16,
+                      children: <Widget>[
+                        Container(
+                          child: SizedBox(
+                            width: 80,
+                            height: 80,
+                            child: ClipOval(
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                              ),
+                            ),
+                          ),
+                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                        Container(
+                          child: Row(
+                            children: [
+                              Text('Timo', style: profileTextStyle,),
+                              Icon(Icons.female, color: Colors.red[400],),
+                            ],
+                          ),
                         ).withGridPlacement(columnStart: 1, rowStart: 0),
                         Container(
                           child: Row(
