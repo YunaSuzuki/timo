@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timo/screen/login_page.dart';
 import 'package:timo/screen/pet_list_page.dart';
 import 'screen/pet_profile_page.dart';
 
@@ -10,10 +11,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Timo',
-      initialRoute: '/',
-      routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => PetListPage()
-      }
+      home: LoginPage(),
+      // initialRoute: '/',
+      // routes: <String, WidgetBuilder>{
+      //   '/': (BuildContext context) => PetListPage()
+      // }
     );
   }
 }
