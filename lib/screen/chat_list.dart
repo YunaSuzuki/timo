@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:timo/constants.dart';
-import 'package:timo/components/bottomNavigationBar.dart';
+import 'package:timo/screen/main_page.dart';
 
 class ChatList extends StatelessWidget {
 
@@ -56,7 +56,6 @@ class ChatList extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
 }

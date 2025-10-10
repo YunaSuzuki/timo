@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:timo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:timo/components/bottomNavigationBar.dart';
+import 'package:timo/screen/main_page.dart';
 import 'package:timo/screen/pet_profile_page.dart';
 
 class PetListPage extends StatelessWidget {
@@ -56,7 +56,7 @@ class PetListPage extends StatelessWidget {
                     ),
                   ),
                 ),
-        
+
                 // プロフィール画像をヘッダーの下端に少し重ねて配置
                 Positioned(
                   left: 16,
@@ -213,7 +213,6 @@ class PetListPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
 }
