@@ -4,6 +4,7 @@ import 'package:timo/screen/login_page.dart';
 import 'package:timo/screen/main_page.dart';
 import 'package:timo/screen/pet_list_page.dart';
 import 'screen/pet_profile_page.dart';
+import 'screen/chat.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => MainPage(),
         'chat_list': (BuildContext context) => ChatList(),
-        'pet_profile_page' : (BuildContext context) => ProfilePage()
+        'pet_profile_page' : (BuildContext context) => ProfilePage(),
+        'chat': (BuildContext context) => Chat(),
       }
     );
   }
