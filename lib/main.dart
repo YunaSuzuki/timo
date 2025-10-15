@@ -5,8 +5,16 @@ import 'package:timo/screen/main_page.dart';
 import 'package:timo/screen/pet_list_page.dart';
 import 'screen/pet_profile_page.dart';
 import 'screen/chat.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
 

@@ -43,3 +43,55 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# ======================================
+# Flutter / Dart
+# ======================================
+.dart_tool/
+.buildlog/
+.packages
+.pub-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub/
+
+# Build outputs
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Runner.xcworkspace
+ios/Flutter/Generated.xcconfig
+android/.gradle/
+android/build/
+android/app/build/
+
+# ======================================
+# Firebase / Google services
+# ======================================
+
+# Firebase CLI generated file
+# 必要なので Git 管理推奨
+!lib/firebase_options.dart
+
+# 機密情報ファイル
+# 公開リポジトリでは除外推奨
+google-services.json
+GoogleService-Info.plist
+
+# ======================================
+# IDE / OS
+# ======================================
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.DS_Store
+*.log
+*.swp
+
+# CocoaPods / Firebase
+ios/Podfile
+ios/Podfile.lock
+macos/Podfile
+firebase.json
