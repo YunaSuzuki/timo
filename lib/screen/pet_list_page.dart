@@ -4,6 +4,7 @@ import 'package:timo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:timo/screen/main_page.dart';
 import 'package:timo/screen/pet_profile_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PetListPage extends StatelessWidget {
 
@@ -16,10 +17,17 @@ class PetListPage extends StatelessWidget {
   static const List<Tab> homeTabs = <Tab>[
     Tab(icon: Icon(Icons.pets)),
     Tab(icon: Icon(Icons.grid_on)),
-    Tab(icon: Icon(Icons.event_available)),
+    Tab(icon: Icon(Icons.settings)),
   ];
 
-
+  Future<void> _signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    // ここでauthStateChanges()が自動的に検知され、AuthGateでログイン画面に戻る
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('ログアウトしました')),
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,7 +211,12 @@ class PetListPage extends StatelessWidget {
                             separatorBuilder: (context, index) => SizedBox(height: 12.0,),
                           ),
                           Center(child: Text('image post view'),),
-                          Center(child: Text('event list'),),
+                          Center(
+                              child: TextButton(
+                                  onPressed: () => _signOut(context),
+                                  child: Text('Sign out Button', style: TextStyle(color: Colors.black,))
+                              )
+                          ),
                         ]
                       )
                     ),
