@@ -17,6 +17,7 @@ class PetListPage extends StatelessWidget {
   static const List<Tab> homeTabs = <Tab>[
     Tab(icon: Icon(Icons.pets)),
     Tab(icon: Icon(Icons.grid_on)),
+    Tab(icon: Icon(Icons.calendar_month)),
     Tab(icon: Icon(Icons.settings)),
   ];
 
@@ -211,6 +212,7 @@ class PetListPage extends StatelessWidget {
                             separatorBuilder: (context, index) => SizedBox(height: 12.0,),
                           ),
                           Center(child: Text('image post view'),),
+                          Center(child: Text('Event list'),),
                           Center(
                               child: TextButton(
                                   onPressed: () => _signOut(context),
