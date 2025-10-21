@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:timo/screen/signin_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -58,6 +59,15 @@ class _SignUpPageState extends State<SignUpPage> {
             ElevatedButton(
               onPressed: signUp,
               child: const Text('登録'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SignInPage()),
+                );
+              },
+              child: const Text('すでにアカウントをお持ちの方はこちら'),
             ),
           ],
         ),
