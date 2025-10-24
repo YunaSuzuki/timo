@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:timo/screen/chat_list.dart';
+import 'package:timo/screen/chat_page.dart';
 import 'package:timo/screen/pet_list_page.dart';
 import 'package:timo/screen/pet_profile_page.dart';
+import 'package:timo/screen/user_list_page.dart';
 
 class MainPage extends StatefulWidget {
 
@@ -19,7 +21,7 @@ class _MainPageState extends State<MainPage> {
     PetListPage(),
     PetListPage(),
     PetListPage(),
-    ChatList(),
+    UserListPage()
   ];
 
   void _onItemTapped(int index) {
