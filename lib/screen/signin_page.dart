@@ -55,37 +55,89 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('ログイン')),
+      appBar: AppBar(title: const Text(
+        'ログイン',
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF3c434c),
+            fontSize: 18
+        ),
+      )),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: 'メールアドレス'),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'パスワード'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: signIn,
-              child: const Text('ログイン'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const SignUpPage()),
-                );
-              },
-              child: const Text('新規登録はこちら'),
-            ),
-          ],
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF27CA84)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF27CA84)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    labelText: 'メールアドレス',
+                    icon: Icon(Icons.mail, color: Colors.green,),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF27CA84)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF27CA84)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    labelText: 'パスワード',
+                    icon: Icon(Icons.key, color: Colors.green,),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: signIn,
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Color(0xFF27CA84)),
+                  minimumSize: WidgetStatePropertyAll(Size(200, 50))
+                ),
+                child: const Text(
+                  'ログイン',
+                  style: TextStyle(
+                      color: Color(0xFFFFFFFF),
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.6
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SignUpPage()),
+                  );
+                },
+                child: const Text(
+                  '新規登録はこちら',
+                  style: TextStyle(
+                    color: Color(0xFF2B323A),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

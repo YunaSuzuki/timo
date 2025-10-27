@@ -123,7 +123,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
                 style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Color(0xFF27CA84))
+                    backgroundColor: WidgetStatePropertyAll(Color(0xFF27CA84)),
+                    minimumSize: WidgetStatePropertyAll(Size(200, 50))
                 ),
               ),
               TextButton(
