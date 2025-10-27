@@ -56,35 +56,92 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('ユーザー登録')),
+      appBar: AppBar(
+          title: const Text(
+            'アカウント作成',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF3c434c),
+              fontSize: 18
+            ),
+          )
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: 'メールアドレス'),
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(labelText: 'パスワード'),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: signUp,
-              child: const Text('登録'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const SignInPage()),
-                );
-              },
-              child: const Text('すでにアカウントをお持ちの方はこちら'),
-            ),
-          ],
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF27CA84)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF27CA84)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    labelText: 'メールアドレス',
+                    icon: Icon(Icons.mail, color: Colors.green,),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: TextField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF27CA84)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF27CA84)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    ),
+                    icon: Icon(Icons.key, color: Colors.green,),
+                    labelText: 'パスワード',
+                  ),
+                  obscureText: true,
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: signUp,
+                child: const Text(
+                  'アカウント作成',
+                  style: TextStyle(
+                    color: Color(0xFFFFFFFF),
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.6
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Color(0xFF27CA84))
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SignInPage()),
+                  );
+                },
+                child: const Text(
+                  'すでにアカウントをお持ちの方はこちら',
+                  style: TextStyle(
+                    color: Color(0xFF2B323A),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
