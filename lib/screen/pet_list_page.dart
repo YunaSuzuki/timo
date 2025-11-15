@@ -149,80 +149,81 @@ class PetListPage extends StatelessWidget {
             SizedBox(height: 30.0,),
             DefaultTabController(
                 length: homeTabs.length,
-                child:  Column(
-                  children: [
-                    TabBar(tabs: homeTabs),
-                    SizedBox(
-                      height: tabBarViewHeight,
-                      child: TabBarView(
-                        children: [
-                          ListView.separated(
-                            padding: EdgeInsets.only(left: 28.0, right: 12.0, top: 16.0),
-                            itemCount: 10,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: (){
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => ProfilePage())
-                                  );
-                                },
-                                child: Container(
-                                  height: 80,
-                                  child: LayoutGrid(
-                                    columnSizes: [auto, 1.fr],
-                                    rowSizes: [1.fr, 1.fr],
-                                    columnGap: 16,
-                                    children: <Widget>[
-                                      Container(
-                                        child: SizedBox(
-                                          width: 80,
-                                          height: 80,
-                                          child: ClipOval(
-                                            child: FittedBox(
-                                              fit: BoxFit.cover,
-                                              alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
-                                              child: Image.asset('assets/images/pet_profile_image.JPG'),
+                child:  Expanded(
+                  child: Column(
+                    children: [
+                      TabBar(tabs: homeTabs),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            ListView.separated(
+                              padding: EdgeInsets.only(left: 28.0, right: 12.0, top: 16.0),
+                              itemCount: 10,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: (){
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => ProfilePage())
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 80,
+                                    child: LayoutGrid(
+                                      columnSizes: [auto, 1.fr],
+                                      rowSizes: [1.fr, 1.fr],
+                                      columnGap: 16,
+                                      children: <Widget>[
+                                        Container(
+                                          child: SizedBox(
+                                            width: 80,
+                                            height: 80,
+                                            child: ClipOval(
+                                              child: FittedBox(
+                                                fit: BoxFit.cover,
+                                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            Text('Timo', style: profileTextStyle,),
-                                            Icon(Icons.female, color: Colors.red[400],),
-                                          ],
-                                        ),
-                                      ).withGridPlacement(columnStart: 1, rowStart: 0),
-                                      Container(
-                                        child: Row(
-                                          children: <Widget>[
-                                            Text('柴犬', style: profileTextStyle,),
-                                            Text('/', style: profileTextStyle,),
-                                            Text('4歳', style: profileTextStyle,)
-                                          ],
-                                        ),
-                                      ).withGridPlacement(columnStart: 1, rowStart: 1),
-                                    ],
+                                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              Text('Timo', style: profileTextStyle,),
+                                              Icon(Icons.female, color: Colors.red[400],),
+                                            ],
+                                          ),
+                                        ).withGridPlacement(columnStart: 1, rowStart: 0),
+                                        Container(
+                                          child: Row(
+                                            children: <Widget>[
+                                              Text('柴犬', style: profileTextStyle,),
+                                              Text('/', style: profileTextStyle,),
+                                              Text('4歳', style: profileTextStyle,)
+                                            ],
+                                          ),
+                                        ).withGridPlacement(columnStart: 1, rowStart: 1),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (context, index) => SizedBox(height: 12.0,),
-                          ),
-                          Center(child: Text('image post view'),),
-                          Center(child: Text('Event list'),),
-                          Center(
-                              child: TextButton(
-                                  onPressed: () => _signOut(context),
-                                  child: Text('Sign out Button', style: TextStyle(color: Colors.black,))
-                              )
-                          ),
-                        ]
-                      )
-                    ),
-                  ],
+                                );
+                              },
+                              separatorBuilder: (context, index) => SizedBox(height: 12.0,),
+                            ),
+                            Center(child: Text('image post view'),),
+                            Center(child: Text('Event list'),),
+                            Center(
+                                child: TextButton(
+                                    onPressed: () => _signOut(context),
+                                    child: Text('Sign out Button', style: TextStyle(color: Colors.black,))
+                                )
+                            ),
+                          ]
+                        )
+                      ),
+                    ],
+                  ),
                 ),
             ),
           ],
