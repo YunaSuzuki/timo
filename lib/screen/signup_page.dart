@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:timo/screen/signin_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'profile_setup_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -19,20 +20,25 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<void> signUp() async {
     try {
-      final userCredential = await _auth.createUserWithEmailAndPassword(
+      final credential = await _auth.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
 
-      final user = userCredential.user;
+      final uid = credential.user!.uid;
 
-      if (user != null) {
-        // Firestoreにユーザー情報を保存
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'email': emailController.text.trim(),
-          'createdAt': FieldValue.serverTimestamp(),
-        });
-      }
+      // プロフィール入力画面へ uid を渡して遷移
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ProfileSetupPage(uid: uid),
+        ),
+      );
+
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('登録が完了しました！')),
+      );
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('登録が完了しました！')),
