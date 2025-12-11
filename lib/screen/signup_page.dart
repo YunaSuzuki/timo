@@ -14,50 +14,38 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final auth = FirebaseAuth.instance;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool isLoading = false;
 
-  Future<void> signUp() async {
+  Future<void> _signUp() async {
     try {
-      final credential = await _auth.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
+      setState(() => isLoading = true);
+
+      UserCredential userCredential =
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
       );
 
-      final uid = credential.user!.uid;
-
-      // プロフィール入力画面へ uid を渡して遷移
+      // 登録成功 → プロフィール設定ページへ
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => ProfileSetupPage(uid: uid),
+          builder: (context) => ProfileSetupPage(
+            uid: userCredential.user!.uid,
+            email: _emailController.text.trim(),
+          ),
         ),
       );
-
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('登録が完了しました！')),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('登録が完了しました！')),
-      );
-
-    } on FirebaseAuthException catch (e) {
-      String message = '';
-      if (e.code == 'weak-password') {
-        message = 'パスワードが弱すぎます。';
-      } else if (e.code == 'email-already-in-use') {
-        message = 'このメールはすでに使用されています。';
-      } else if (e.code == 'invalid-email') {
-        message = 'メールアドレスが正しくありません。';
-      } else {
-        message = '登録に失敗しました: ${e.message}';
-      }
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('エラー: $e')));
+    } finally {
+      setState(() => isLoading = false);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +68,7 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: TextField(
-                  controller: emailController,
+                  controller: _emailController,
                   decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF27CA84)),
@@ -101,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: TextField(
-                  controller: passwordController,
+                  controller: _passwordController,
                   decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFF27CA84)),
@@ -119,7 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: signUp,
+                onPressed: _signUp,
                 child: const Text(
                   'アカウント作成',
                   style: TextStyle(
