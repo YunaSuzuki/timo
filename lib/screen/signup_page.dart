@@ -40,7 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
       );
     } catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('エラー: $e')));
+          .showSnackBar(SnackBar(content: Text('このメールアドレスはご使用できません。')));
     } finally {
       setState(() => isLoading = false);
     }
