@@ -24,28 +24,68 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
   bool isSaving = false;
 
   Future<void> _saveProfile() async {
-    try {
-      setState(() => isSaving = true);
+    final username = _usernameController.text.trim();
+    final accountID = _accountIdController.text.trim();
+    final bio = _bioController.text.trim();
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.uid)
-          .set({
-        'email': widget.email,
-        'username': _usernameController.text.trim(),
-        'accountID': _accountIdController.text.trim(),
-        'bio': _bioController.text.trim(),
-        'createdAt': Timestamp.now(),
+    if (username.isEmpty || accountID.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('ユーザーネームとアカウントIDは必須です')),
+      );
+      return;
+    }
+
+    setState(() => isSaving = true);
+
+    final firestore = FirebaseFirestore.instance;
+
+    try {
+      await firestore.runTransaction((transaction) async {
+        final accountIdRef =
+        firestore.collection('account_ids').doc(accountID);
+
+        final accountIdSnap = await transaction.get(accountIdRef);
+
+        // 🔒 accountID が既に存在していたら失敗
+        if (accountIdSnap.exists) {
+          throw Exception('ACCOUNT_ID_TAKEN');
+        }
+
+        // 🔥 accountID を確保
+        transaction.set(accountIdRef, {
+          'uid': widget.uid,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+
+        // 🔥 users にプロフィール保存
+        transaction.set(
+          firestore.collection('users').doc(widget.uid),
+          {
+            'email': widget.email,
+            'username': username,
+            'accountID': accountID,
+            'bio': bio,
+            'createdAt': FieldValue.serverTimestamp(),
+          },
+        );
       });
 
-      // 完了後ホーム画面へ（仮）
+      // 成功 → ホーム画面
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MainPage()),
+        MaterialPageRoute(builder: (_) => MainPage()),
       );
+
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('保存エラー: $e')));
+      if (e.toString().contains('ACCOUNT_ID_TAKEN')) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('このアカウントIDは既に使われています')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('保存に失敗しました: $e')),
+        );
+      }
     } finally {
       setState(() => isSaving = false);
     }
@@ -56,7 +96,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Profile Setup")),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
@@ -76,9 +116,9 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
             ElevatedButton(
               onPressed: isSaving ? null : _saveProfile,
               child: isSaving
-                  ? CircularProgressIndicator(color: Colors.white)
+                  ? const CircularProgressIndicator(color: Colors.white)
                   : const Text("保存"),
-            )
+            ),
           ],
         ),
       ),
