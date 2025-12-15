@@ -51,13 +51,13 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
           throw Exception('ACCOUNT_ID_TAKEN');
         }
 
-        // 🔥 accountID を確保
+        // accountID を確保
         transaction.set(accountIdRef, {
           'uid': widget.uid,
           'createdAt': FieldValue.serverTimestamp(),
         });
 
-        // 🔥 users にプロフィール保存
+        // users にプロフィール保存
         transaction.set(
           firestore.collection('users').doc(widget.uid),
           {
@@ -93,33 +93,86 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Profile Setup")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: _usernameController,
-              decoration: const InputDecoration(labelText: "ユーザーネーム"),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text("プロフィール作成", style: TextStyle( fontWeight: FontWeight.bold),)),
+        body: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _usernameController,
+                  decoration: const InputDecoration(
+                    labelText: "アカウント名",
+                    floatingLabelStyle: TextStyle(fontSize: 20, color: Color(0xFF27CA84), fontWeight: FontWeight.bold),
+                    hintText: '柴犬ティモファミリー',
+                    hintStyle: TextStyle(fontSize: 12, color: Color(0xFF78909C)),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30,),
+                TextField(
+                  controller: _accountIdController,
+                  decoration: const InputDecoration(
+                    labelText: "アカウントID",
+                    floatingLabelStyle: TextStyle(fontSize: 20, color: Color(0xFF27CA84), fontWeight: FontWeight.bold),
+                    hintText: '@shiba_timo',
+                    hintStyle: TextStyle(fontSize: 12, color: Color(0xFF78909C)),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)
+                    ),
+                  ),
+                ),
+                ),
+                SizedBox(height: 30,),
+                TextField(
+                  controller: _bioController,
+                  decoration: const InputDecoration(
+                    labelText: "自己紹介",
+                    floatingLabelStyle: TextStyle(fontSize: 20, color: Color(0xFF27CA84), fontWeight: FontWeight.bold),
+                    hintText: '柴犬を2匹飼っています！',
+                    hintStyle: TextStyle(fontSize: 12, color: Color(0xFF78909C)),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
+                    ),
+                  ),
+                  maxLines: 3,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: isSaving ? null : _saveProfile,
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(Color(0xFF27CA84)),
+                    minimumSize: WidgetStatePropertyAll(Size(200, 50)),
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0)
+                      )
+                    )
+                  ),
+                  child: isSaving
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text("保存", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+
+                ),
+              ],
             ),
-            TextField(
-              controller: _accountIdController,
-              decoration: const InputDecoration(labelText: "アカウントID"),
-            ),
-            TextField(
-              controller: _bioController,
-              decoration: const InputDecoration(labelText: "自己紹介"),
-              maxLines: 3,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: isSaving ? null : _saveProfile,
-              child: isSaving
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : const Text("保存"),
-            ),
-          ],
+          ),
         ),
       ),
     );
