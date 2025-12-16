@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:timo/screen/signin_page.dart';
@@ -54,7 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
           title: const Text(
             'アカウント作成',
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w700,
               color: Color(0xFF3c434c),
               fontSize: 18
             ),
@@ -70,16 +71,17 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF27CA84)),
-                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    labelText: 'Email',
+                    floatingLabelStyle: TextStyle(fontSize: 20, color: Color(0xFF27CA84), fontFamily: 'Quicksand', fontWeight: FontWeight.w700),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    hintText: 'sample@email.com',
+                    hintStyle: TextStyle(fontSize: 12, color: Color(0xFF78909C), fontFamily: 'Quicksand'),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF27CA84)),
-                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
                     ),
-                    labelText: 'メールアドレス',
-                    icon: Icon(Icons.mail, color: Colors.green,),
                   ),
                 ),
               ),
@@ -91,16 +93,16 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: TextField(
                   controller: _passwordController,
                   decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF27CA84)),
-                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    labelText: 'Password',
+                    floatingLabelStyle: TextStyle(fontSize: 20, color: Color(0xFF27CA84), fontFamily: 'Quicksand', fontWeight: FontWeight.bold),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    hintStyle: TextStyle(fontSize: 12, color: Color(0xFF78909C)),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF27CA84)),
-                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFb7b7b7)),
                     ),
-                    icon: Icon(Icons.key, color: Colors.green,),
-                    labelText: 'パスワード',
                   ),
                   obscureText: true,
                 ),
@@ -111,29 +113,45 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: const Text(
                   'アカウント作成',
                   style: TextStyle(
+                    fontWeight: FontWeight.w700,
                     color: Color(0xFFFFFFFF),
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.6
                   ),
                 ),
                 style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Color(0xFF27CA84)),
-                    minimumSize: WidgetStatePropertyAll(Size(200, 50))
+                  backgroundColor: WidgetStatePropertyAll(Color(0xFF27CA84)),
+                  minimumSize: WidgetStatePropertyAll(Size(200, 50)),
+                  shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)))
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const SignInPage()),
-                  );
-                },
-                child: const Text(
-                  'すでにアカウントをお持ちの方はこちら',
+              SizedBox(
+                height: 12,
+              ),
+              RichText(
+                text: TextSpan(
                   style: TextStyle(
-                    color: Color(0xFF2B323A),
+                    fontSize: 12.0,
+                    color: Color(0xFF545454),
                   ),
+                  children: [
+                    TextSpan(text: 'すでにアカウントをお持ちの方は'),
+                    TextSpan(
+                      text: 'こちら',
+                      style: TextStyle(
+                        color: Color(0xFF27CA84),
+                        fontWeight: FontWeight.w700,
+                        decoration: TextDecoration.underline,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => const SignInPage()),
+                          );
+                        }
+                    )
+                  ],
                 ),
+
               ),
             ],
           ),
