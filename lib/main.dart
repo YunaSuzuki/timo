@@ -24,6 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Timo',
+      theme: ThemeData(
+        fontFamily: 'M_Plus_Rounded_1c'
+      ),
       home: const AuthGate(),
       routes: <String, WidgetBuilder>{
         'chat_list': (BuildContext context) => ChatList(),
