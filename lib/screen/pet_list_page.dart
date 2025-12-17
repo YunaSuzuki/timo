@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:timo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:timo/screen/main_page.dart';
 import 'package:timo/screen/pet_profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class PetListPage extends StatelessWidget {
+class PetListPage extends StatefulWidget {
+  const PetListPage({super.key});
 
+  @override
+  State<PetListPage> createState() => _PetListPageState();
+}
+
+class _PetListPageState extends State<PetListPage> {
+  String? username;
+  String? accountId;
+  String? bio;
   final double headerHeight = 220;
   final double profileRadius = 56;
   final String headerAsset = 'assets/images/header_image.jpg';
@@ -28,7 +37,32 @@ class PetListPage extends StatelessWidget {
       const SnackBar(content: Text('ログアウトしました')),
     );
   }
-  
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCurrentUserProfile();
+  }
+
+  Future<void> fetchCurrentUserProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    if (!doc.exists) return;
+
+    final data = doc.data()!;
+    setState(() {
+      username = data['username'];
+      accountId = data['accountID'];
+      bio = data['bio'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,27 +130,21 @@ class PetListPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 30.0,), //header and profile image
-            Container(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 40,
-                    child: LayoutGrid(
-                      columnSizes: [180.px, 1.fr],
-                      rowSizes: [1.fr, 1.fr],
-                      children: <Widget>[
-                        Container().withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
-                        Container(
-                          child: Text('ティモの柴旅日記', style: appTextStyle(color: greyDark),),
-                        ).withGridPlacement(columnStart: 1, rowStart: 0),
-                        Container(
-                          child: Text('@username', style: appTextStyleEn(color: greyDark, fontSize: 12.0, fontWeight: FontWeight.w400)),
-                        ).withGridPlacement(columnStart: 1, rowStart: 1),
-                      ],
-                    ),
+            Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 40,
+                  child: LayoutGrid(
+                    columnSizes: [180.px, 1.fr],
+                    rowSizes: [1.fr, 1.fr],
+                    children: <Widget>[
+                      Container().withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                      Text(username ?? 'AccountName', style: appTextStyle(color: greyDark),).withGridPlacement(columnStart: 1, rowStart: 0),
+                      Text('@${accountId ?? 'username'}', style: appTextStyleEn(color: greyDark, fontSize: 12.0, fontWeight: FontWeight.w400)).withGridPlacement(columnStart: 1, rowStart: 1),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             SizedBox(height: 28.0,),
             Container(
@@ -148,83 +176,83 @@ class PetListPage extends StatelessWidget {
             ), // FollowButton //TextButton
             SizedBox(height: 30.0,),
             DefaultTabController(
-                length: homeTabs.length,
-                child:  Expanded(
-                  child: Column(
-                    children: [
-                      TabBar(tabs: homeTabs),
-                      Expanded(
+              length: homeTabs.length,
+              child:  Expanded(
+                child: Column(
+                  children: [
+                    TabBar(tabs: homeTabs),
+                    Expanded(
                         child: TabBarView(
-                          children: [
-                            ListView.separated(
-                              padding: EdgeInsets.only(left: 28.0, right: 12.0, top: 16.0),
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: (){
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => ProfilePage())
-                                    );
-                                  },
-                                  child: Container(
-                                    height: 80,
-                                    child: LayoutGrid(
-                                      columnSizes: [auto, 1.fr],
-                                      rowSizes: [1.fr, 1.fr],
-                                      columnGap: 16,
-                                      children: <Widget>[
-                                        Container(
-                                          child: SizedBox(
-                                            width: 80,
-                                            height: 80,
-                                            child: ClipOval(
-                                              child: FittedBox(
-                                                fit: BoxFit.cover,
-                                                alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
-                                                child: Image.asset('assets/images/pet_profile_image.JPG'),
+                            children: [
+                              ListView.separated(
+                                padding: EdgeInsets.only(left: 28.0, right: 12.0, top: 16.0),
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => ProfilePage())
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 80,
+                                      child: LayoutGrid(
+                                        columnSizes: [auto, 1.fr],
+                                        rowSizes: [1.fr, 1.fr],
+                                        columnGap: 16,
+                                        children: <Widget>[
+                                          Container(
+                                            child: SizedBox(
+                                              width: 80,
+                                              height: 80,
+                                              child: ClipOval(
+                                                child: FittedBox(
+                                                  fit: BoxFit.cover,
+                                                  alignment: Alignment(0, -0.8), // ← y方向を上に寄せる (-1=上, 0=中央, 1=下)
+                                                  child: Image.asset('assets/images/pet_profile_image.JPG'),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
-                                        Container(
-                                          child: Row(
-                                            children: [
-                                              Text('Timo', style: appTextStyle(color: greyDark)),
-                                              Icon(Icons.female, color: Colors.red[400],),
-                                            ],
-                                          ),
-                                        ).withGridPlacement(columnStart: 1, rowStart: 0),
-                                        Container(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text('柴犬', style: appTextStyle(color: greyDark)),
-                                              Text('/', style: appTextStyle(color: greyDark)),
-                                              Text('4歳', style: appTextStyle(color: greyDark),)
-                                            ],
-                                          ),
-                                        ).withGridPlacement(columnStart: 1, rowStart: 1),
-                                      ],
+                                          ).withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
+                                          Container(
+                                            child: Row(
+                                              children: [
+                                                Text('Timo', style: appTextStyle(color: greyDark)),
+                                                Icon(Icons.female, color: Colors.red[400],),
+                                              ],
+                                            ),
+                                          ).withGridPlacement(columnStart: 1, rowStart: 0),
+                                          Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Text('柴犬', style: appTextStyle(color: greyDark)),
+                                                Text('/', style: appTextStyle(color: greyDark)),
+                                                Text('4歳', style: appTextStyle(color: greyDark),)
+                                              ],
+                                            ),
+                                          ).withGridPlacement(columnStart: 1, rowStart: 1),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (context, index) => SizedBox(height: 12.0,),
-                            ),
-                            Center(child: Text('image post view'),),
-                            Center(child: Text('Event list'),),
-                            Center(
-                                child: TextButton(
-                                    onPressed: () => _signOut(context),
-                                    child: Text('Sign out Button', style: TextStyle(color: Colors.black,))
-                                )
-                            ),
-                          ]
+                                  );
+                                },
+                                separatorBuilder: (context, index) => SizedBox(height: 12.0,),
+                              ),
+                              Center(child: Text('image post view'),),
+                              Center(child: Text('Event list'),),
+                              Center(
+                                  child: TextButton(
+                                      onPressed: () => _signOut(context),
+                                      child: Text('Sign out Button', style: TextStyle(color: Colors.black,))
+                                  )
+                              ),
+                            ]
                         )
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
             ),
           ],
         ),
