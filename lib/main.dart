@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:timo/authgate.dart';
-import 'package:timo/screen/chat_list.dart';
 import 'package:timo/screen/signin_page.dart';
 import 'package:timo/screen/main_page.dart';
 import 'package:timo/screen/pet_list_page.dart';
+import 'package:timo/screen/user_list_page.dart';
 import 'screen/pet_profile_page.dart';
-import 'screen/chat.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -29,9 +28,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const AuthGate(),
       routes: <String, WidgetBuilder>{
-        'chat_list': (BuildContext context) => ChatList(),
+        'chat_list': (BuildContext context) => UserListPage(),
         'pet_profile_page' : (BuildContext context) => ProfilePage(),
-        'chat': (BuildContext context) => Chat(),
+        'chat': (BuildContext context) => UserListPage(),
       }
     );
   }
