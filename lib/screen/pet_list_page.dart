@@ -11,7 +11,7 @@ class PetListPage extends StatelessWidget {
   final double headerHeight = 220;
   final double profileRadius = 56;
   final String headerAsset = 'assets/images/header_image.jpg';
-  final String profileAsset = 'assets/images/~';
+  final String profileAsset = 'assets/images/header_image.jpg';
   final double tabBarViewHeight = 350;
 
   static const List<Tab> homeTabs = <Tab>[
@@ -107,10 +107,10 @@ class PetListPage extends StatelessWidget {
                       children: <Widget>[
                         Container().withGridPlacement(columnStart: 0, rowStart: 0, rowSpan: 2),
                         Container(
-                          child: Text('ティモの柴旅日記', style: profileTextStyle,),
+                          child: Text('ティモの柴旅日記', style: appTextStyle(color: greyDark),),
                         ).withGridPlacement(columnStart: 1, rowStart: 0),
                         Container(
-                          child: Text('@username', style: sTextStyle,),
+                          child: Text('@username', style: appTextStyleEn(color: greyDark, fontSize: 12.0, fontWeight: FontWeight.w400)),
                         ).withGridPlacement(columnStart: 1, rowStart: 1),
                       ],
                     ),
@@ -130,7 +130,7 @@ class PetListPage extends StatelessWidget {
                       backgroundColor: Colors.blue,
                       padding: EdgeInsets.symmetric(horizontal: 32, vertical: 10), // inner padding
                     ),
-                    child: Text("Follow", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.0),),
+                    child: Text("Follow", style: appTextStyleEn(color: Colors.white),),
                   ),
                   SizedBox(width: 8.0,),
                   TextButton(
@@ -139,7 +139,7 @@ class PetListPage extends StatelessWidget {
                       backgroundColor: Colors.orange,
                       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10), // inner padding
                     ),
-                    child: Text("Friends", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.0),),
+                    child: Text("Friends", style: appTextStyleEn(color: Colors.white),),
                   ),
                   SizedBox(width: 12.0,),
                   Icon(FontAwesomeIcons.envelope, size: 30.0, color: Colors.grey[700],),
@@ -190,7 +190,7 @@ class PetListPage extends StatelessWidget {
                                         Container(
                                           child: Row(
                                             children: [
-                                              Text('Timo', style: profileTextStyle,),
+                                              Text('Timo', style: appTextStyle(color: greyDark)),
                                               Icon(Icons.female, color: Colors.red[400],),
                                             ],
                                           ),
@@ -198,9 +198,9 @@ class PetListPage extends StatelessWidget {
                                         Container(
                                           child: Row(
                                             children: <Widget>[
-                                              Text('柴犬', style: profileTextStyle,),
-                                              Text('/', style: profileTextStyle,),
-                                              Text('4歳', style: profileTextStyle,)
+                                              Text('柴犬', style: appTextStyle(color: greyDark)),
+                                              Text('/', style: appTextStyle(color: greyDark)),
+                                              Text('4歳', style: appTextStyle(color: greyDark),)
                                             ],
                                           ),
                                         ).withGridPlacement(columnStart: 1, rowStart: 1),
