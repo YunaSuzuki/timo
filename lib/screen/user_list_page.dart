@@ -22,8 +22,9 @@ class UserListPage extends StatelessWidget {
             itemCount: users.length,
             itemBuilder: (context, index) {
               final user = users[index];
+              final data = user.data() as Map<String, dynamic>;
               return ListTile(
-                title: Text(user['email']),
+                title: Text(data['username'] ?? 'ユーザーネームなし'),
                 onTap: () {
                   Navigator.push(
                     context,
