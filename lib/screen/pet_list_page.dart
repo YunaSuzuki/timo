@@ -24,7 +24,7 @@ class _PetListPageState extends State<PetListPage> {
   final double tabBarViewHeight = 350;
 
   static const List<Tab> homeTabs = <Tab>[
-    Tab(icon: Icon(Icons.pets)),
+    Tab(icon: Icon(Icons.pets), ),
     Tab(icon: Icon(Icons.grid_on)),
     Tab(icon: Icon(Icons.calendar_month)),
     Tab(icon: Icon(Icons.settings)),
@@ -180,7 +180,7 @@ class _PetListPageState extends State<PetListPage> {
               child:  Expanded(
                 child: Column(
                   children: [
-                    TabBar(tabs: homeTabs),
+                    TabBar(tabs: homeTabs, labelColor: Color(0xFFb27130), indicatorColor: Colors.transparent,),
                     Expanded(
                         child: TabBarView(
                             children: [

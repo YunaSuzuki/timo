@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timo/constants.dart';
 import 'package:timo/screen/chat_page.dart';
 import 'package:timo/screen/pet_list_page.dart';
 import 'package:timo/screen/pet_profile_page.dart';
@@ -38,12 +39,14 @@ class _MainPageState extends State<MainPage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.grey,), label: 'Home', ),
-          BottomNavigationBarItem(icon: Icon(Icons.search, color: Colors.grey,), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.add, color: Colors.grey,), label: 'add'),
-          BottomNavigationBarItem(icon: Icon(Icons.schedule, color: Colors.grey,), label: 'timeline'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble, color: Colors.grey,), label: 'message'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home', ),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'add'),
+          BottomNavigationBarItem(icon: Icon(Icons.schedule), label: 'timeline'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: 'message'),
         ],
+        selectedItemColor: greyDark, //selectされているIcon・labelのcolor
+        selectedIconTheme: IconThemeData(color:  Color(0xFF5AA3C6)), //selectされているIconのcolor
       ),
     );
 
