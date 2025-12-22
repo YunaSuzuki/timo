@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:timo/components/chat_input_widget.dart';
 
 class ChatPage extends StatefulWidget {
   final String partnerId;
@@ -17,7 +18,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final TextEditingController _controller = TextEditingController();
+  // final TextEditingController _controller = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late final String chatId;
   late final DocumentReference chatDocRef;
@@ -47,26 +48,7 @@ class _ChatPageState extends State<ChatPage> {
         'members': memberIds,
         'createdAt': FieldValue.serverTimestamp(),
       });
-
-      // 👇 空のチャットに最初のダミーメッセージを追加しておく（オプション）
-      await chatDocRef.collection('messages').add({
-        'text': '',
-        'senderId': 'system',
-        'createdAt': FieldValue.serverTimestamp(),
-      });
     }
-  }
-
-  // メッセージ送信
-  Future<void> sendMessage(String text) async {
-    if (text.trim().isEmpty) return;
-
-    final messagesRef = chatDocRef.collection('messages').doc();
-    await messagesRef.set({
-      'text': text.trim(),
-      'senderId': _auth.currentUser!.uid,
-      'createdAt': FieldValue.serverTimestamp(),
-    });
   }
 
   // メッセージ取得ストリーム
@@ -115,17 +97,57 @@ class _ChatPageState extends State<ChatPage> {
                     itemBuilder: (context, index) {
                       final msg = docs[index];
                       final isMe = msg['senderId'] == currentUserId;
+
+                      final String? text = msg.data().toString().contains('text')
+                          ? msg['text']
+                          : null;
+
+                      final String? imageUrl = msg.data().toString().contains('imageUrl')
+                          ? msg['imageUrl']
+                          : null;
+
                       return Align(
                         alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                         child: Container(
-                          margin:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: isMe ? Colors.blue[100] : Colors.grey[300],
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Text(msg['text']),
+                          child: Column(
+                            crossAxisAlignment:
+                            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                            children: [
+                              // 📷 画像がある場合
+                              if (imageUrl != null && imageUrl.isNotEmpty)
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    imageUrl,
+                                    width: 200,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return const SizedBox(
+                                        width: 200,
+                                        height: 150,
+                                        child: Center(child: CircularProgressIndicator()),
+                                      );
+                                    },
+                                    errorBuilder: (_, __, ___) =>
+                                    const Icon(Icons.broken_image),
+                                  ),
+                                ),
+
+                              // ✏️ テキストがある場合
+                              if (text != null && text.trim().isNotEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Text(text),
+                                ),
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -134,31 +156,7 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
             // メッセージ入力欄
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        hintText: 'input message',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: () {
-                      final text = _controller.text;
-                      if (text.trim().isEmpty) return;
-                      sendMessage(text);
-                      _controller.clear();
-                    },
-                  ),
-                ],
-              ),
-            ),
+            ChatInputWidget(partnerId: widget.partnerId, partnerEmail: widget.partnerEmail,),
           ],
         ),
       ),
