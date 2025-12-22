@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:timo/components/chat_input_widget.dart';
+import 'package:timo/constants.dart';
 
 class ChatPage extends StatefulWidget {
   final String partnerId;
   final String partnerEmail;
+  final String partnerUsername;
 
   const ChatPage({
     Key? key,
     required this.partnerId,
     required this.partnerEmail,
+    required this.partnerUsername,
   }) : super(key: key);
 
   @override
@@ -61,10 +64,9 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUserId = _auth.currentUser!.uid;
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.partnerEmail)),
+      appBar: AppBar(title: Text(widget.partnerUsername, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),)),
       body: SafeArea(
         child: Column(
           children: [
@@ -92,6 +94,7 @@ class _ChatPageState extends State<ChatPage> {
                   final currentUserId = _auth.currentUser!.uid;
 
                   return ListView.builder(
+
                     reverse: true,
                     itemCount: docs.length,
                     itemBuilder: (context, index) {
@@ -106,25 +109,35 @@ class _ChatPageState extends State<ChatPage> {
                           ? msg['imageUrl']
                           : null;
 
+                      final hasImage = imageUrl != null && imageUrl.isNotEmpty;
+                      final hasText = text != null && text.trim().isNotEmpty;
+
                       return Align(
                         alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                         child: Container(
                           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          padding: const EdgeInsets.all(8),
+                          padding: hasImage ? EdgeInsets.zero : const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: isMe ? Colors.blue[100] : Colors.grey[300],
+                            color: hasImage
+                                ? Colors.transparent
+                                : isMe
+                                ? blue
+                                : Colors.blueGrey[50],
                             borderRadius: BorderRadius.circular(12),
+                            border: (!isMe && !hasImage)
+                                ? Border.all(color: Colors.black12, width: 0.5)
+                                : null,
                           ),
                           child: Column(
                             crossAxisAlignment:
                             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                             children: [
-                              // 📷 画像がある場合
-                              if (imageUrl != null && imageUrl.isNotEmpty)
+                              /// 画像
+                              if (hasImage)
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.network(
-                                    imageUrl,
+                                    imageUrl!,
                                     width: 200,
                                     fit: BoxFit.cover,
                                     loadingBuilder: (context, child, loadingProgress) {
@@ -140,11 +153,19 @@ class _ChatPageState extends State<ChatPage> {
                                   ),
                                 ),
 
-                              // ✏️ テキストがある場合
-                              if (text != null && text.trim().isNotEmpty)
+                              /// テキスト
+                              if (hasText)
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: Text(text),
+                                  padding: const EdgeInsets.only(top: 6),
+                                  child: Text(
+                                    text!,
+                                    style: isMe
+                                        ? appTextStyle(color: Colors.white)
+                                        : appTextStyle(
+                                      color: greyDark,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
                             ],
                           ),

@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:timo/constants.dart';
 
 class ChatInputWidget extends StatefulWidget {
   final String partnerId;
@@ -158,30 +159,33 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
 
           /// ⌨️ 入力欄
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             child: Row(
               children: [
-                /// 📷 画像ボタン
-                IconButton(
-                  icon: const Icon(Icons.image),
-                  onPressed: pickImage,
-                ),
-
                 /// TextField
                 Expanded(
                   child: TextField(
                     controller: _controller,
-                    cursorColor: Colors.green, // ← チカチカ線の色
+                    cursorColor: Colors.green,
                     decoration: InputDecoration(
-                      hintText: 'メッセージを入力',
+                      hintText: 'message',
                       filled: true,
-                      fillColor: Colors.grey[100],
+                      fillColor: Colors.blueGrey[50],
+
+                      /// TextField内の左側に画像アイコン
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.image_outlined, color: greyDark,),
+                        onPressed: pickImage,
+                      ),
+
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
                     ),
                   ),
                 ),
@@ -190,7 +194,7 @@ class _ChatInputWidgetState extends State<ChatInputWidget> {
                 IconButton(
                   icon: isSending
                       ? const CircularProgressIndicator()
-                      : const Icon(Icons.send),
+                      : const Icon(Icons.send, color: greyDark),
                   onPressed: isSending ? null : sendMessage,
                 ),
               ],

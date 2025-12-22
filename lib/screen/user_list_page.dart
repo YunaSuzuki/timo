@@ -52,6 +52,7 @@ class UserListPage extends StatelessWidget {
                       builder: (_) => ChatPage(
                         partnerId: user.id,
                         partnerEmail: user['email'],
+                        partnerUsername: user['username'],
                       ),
                     ),
                   );
