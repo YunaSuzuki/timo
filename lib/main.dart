@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const AuthGate(),
       routes: <String, WidgetBuilder>{
-        'chat_list': (BuildContext context) => UserListPage(),
+        'chat_list': (BuildContext context) => ProfilePage(),
         'pet_profile_page' : (BuildContext context) => ProfilePage(),
-        'chat': (BuildContext context) => UserListPage(),
+        'chat': (BuildContext context) => ProfilePage(),
       }
     );
   }

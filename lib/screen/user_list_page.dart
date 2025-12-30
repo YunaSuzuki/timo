@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:timo/screen/pet_list_page.dart';
 import 'chat_page.dart';
 
 class UserListPage extends StatelessWidget {
-  const UserListPage({Key? key}) : super(key: key);
+  const UserListPage({super.key, required this.onAvatarTap});
+  final void Function(String userId) onAvatarTap;
 
   @override
   Widget build(BuildContext context) {
@@ -29,34 +31,39 @@ class UserListPage extends StatelessWidget {
                   columnSizes: [50.px, 12.px, 1.fr],
                   rowSizes: [50.px],
                   children: [
-                    Align(
-                      child: CircleAvatar(
-                        radius: 56,
-                        backgroundImage: AssetImage('assets/images/header_image.jpg'),
-                        backgroundColor: Colors.grey[200],
-                      )
+                    GestureDetector(
+                      child: Align(
+                          child: CircleAvatar(
+                            radius: 56,
+                            backgroundImage: AssetImage('assets/images/header_image.jpg'),
+                            backgroundColor: Colors.grey[200],
+                          )
+                      ),
+                      onTap: () => onAvatarTap(user.id),
                     ).withGridPlacement(columnStart: 0, rowStart: 0),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        data['username'] ?? 'no username',
-                        overflow: TextOverflow.ellipsis,
-                      )
+                    GestureDetector(
+                      child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            data['username'] ?? 'no username',
+                            overflow: TextOverflow.ellipsis,
+                          )
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ChatPage(
+                              partnerId: user.id,
+                              partnerEmail: user['email'],
+                              partnerUsername: user['username'],
+                            ),
+                          ),
+                        );
+                      },
                     ).withGridPlacement(columnStart: 2, rowStart: 0),
                   ],
                 ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => ChatPage(
-                        partnerId: user.id,
-                        partnerEmail: user['email'],
-                        partnerUsername: user['username'],
-                      ),
-                    ),
-                  );
-                },
               );
             },
           );

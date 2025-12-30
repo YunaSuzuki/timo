@@ -7,7 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PetListPage extends StatefulWidget {
-  const PetListPage({super.key});
+  final String? userId;
+
+  const PetListPage({super.key, required this.userId});
 
   @override
   State<PetListPage> createState() => _PetListPageState();
@@ -41,16 +43,16 @@ class _PetListPageState extends State<PetListPage> {
   @override
   void initState() {
     super.initState();
-    fetchCurrentUserProfile();
+    fetchCurrentUserProfile(widget.userId);
   }
 
-  Future<void> fetchCurrentUserProfile() async {
+  Future<void> fetchCurrentUserProfile(userId) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
     final doc = await FirebaseFirestore.instance
         .collection('users')
-        .doc(user.uid)
+        .doc(userId)
         .get();
 
     if (!doc.exists) return;

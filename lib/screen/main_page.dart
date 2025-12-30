@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:timo/constants.dart';
 import 'package:timo/screen/chat_page.dart';
@@ -6,50 +7,59 @@ import 'package:timo/screen/pet_profile_page.dart';
 import 'package:timo/screen/user_list_page.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-
   int _selectedIndex = 0;
+  String? _viewUserId; // ← 表示中のユーザーID
+  late final String currentUserId;
 
-  final List<Widget> _pages = [
-    //BottomNavigationItemの各々のIconをタップすると遷移するページ。アイコンの並び順。
-    PetListPage(),
-    PetListPage(),
-    PetListPage(),
-    PetListPage(),
-    UserListPage()
-  ];
+  @override
+  void initState() {
+    super.initState();
 
-  void _onItemTapped(int index) {
+    final user = FirebaseAuth.instance.currentUser;
+    currentUserId = user!.uid;
+
+    // 初期表示は「ログイン中ユーザーの PetList」
+    _viewUserId = currentUserId;
+  }
+
+  void _openPetList(String userId) {
     setState(() {
-      _selectedIndex = index;
+      _viewUserId = userId;
+      _selectedIndex = 0; // Homeタブに切り替え
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      PetListPage(userId: _viewUserId!), // ← 切替対象
+      PetListPage(userId: currentUserId),
+      PetListPage(userId: currentUserId),
+      PetListPage(userId: currentUserId),
+      UserListPage(onAvatarTap: _openPetList), // ← コールバックで切替
+    ];
+
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home', ),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+        onTap: (i) => setState(() => _selectedIndex = i),
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search'),
           BottomNavigationBarItem(icon: Icon(Icons.add), label: 'add'),
           BottomNavigationBarItem(icon: Icon(Icons.schedule), label: 'timeline'),
           BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: 'message'),
         ],
-        selectedItemColor: greyDark, //selectされているIcon・labelのcolor
-        selectedIconTheme: IconThemeData(color:  Color(0xFF5AA3C6)), //selectされているIconのcolor
       ),
     );
-
-
   }
 }
