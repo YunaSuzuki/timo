@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:timo/constants.dart';
-import 'package:timo/screen/chat_page.dart';
 import 'package:timo/screen/pet_list_page.dart';
-import 'package:timo/screen/pet_profile_page.dart';
 import 'package:timo/screen/user_list_page.dart';
+import 'package:timo/screen/userHomeProfile.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -39,7 +37,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      PetListPage(userId: _viewUserId!), // ← 切替対象
+      UserHomeProfile(userId: _viewUserId!),
       PetListPage(userId: currentUserId),
       PetListPage(userId: currentUserId),
       PetListPage(userId: currentUserId),
