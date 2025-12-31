@@ -13,7 +13,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  String? _viewUserId; // ← 表示中のユーザーID
+  String? _targetUserId; // ← 表示中のユーザーID
   late final String currentUserId;
 
   @override
@@ -24,12 +24,12 @@ class _MainPageState extends State<MainPage> {
     currentUserId = user!.uid;
 
     // 初期表示は「ログイン中ユーザーの PetList」
-    _viewUserId = currentUserId;
+    _targetUserId = currentUserId;
   }
 
   void _openPetList(String userId) {
     setState(() {
-      _viewUserId = userId;
+      _targetUserId = userId;
       _selectedIndex = 0; // Homeタブに切り替え
     });
   }
@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      UserHomeProfile(userId: _viewUserId!),
+      UserHomeProfile(userId: _targetUserId!),
       PetListPage(userId: currentUserId),
       PetListPage(userId: currentUserId),
       PetListPage(userId: currentUserId),
@@ -48,7 +48,15 @@ class _MainPageState extends State<MainPage> {
       body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: (i) => setState(() => _selectedIndex = i),
+        onTap: (i) {
+          setState(() {
+            if (i == 0) {
+              // ← Home を押したら自分のプロフィールへ戻す
+              _targetUserId = currentUserId;
+            }
+            _selectedIndex = i;
+          });
+        },
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),

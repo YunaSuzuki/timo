@@ -5,6 +5,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:timo/components/homeTabs.dart';
 import 'package:timo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:timo/services/follow_service.dart';
 
 
 class UserHomeProfile extends StatefulWidget {
@@ -16,30 +17,37 @@ class UserHomeProfile extends StatefulWidget {
 }
 
 class _UserHomeProfileState extends State<UserHomeProfile> {
-  String? username;
-  String? accountId;
-  String? bio;
   final double headerHeight = 220;
   final double profileRadius = 56;
   final String headerAsset = 'assets/images/header_image.jpg';
   final String profileAsset = 'assets/images/header_image.jpg';
   final double tabBarViewHeight = 350;
+  String? username;
+  String? accountId;
+  String? bio;
 
+  bool isFollowing = false;
+  bool isMe = false;
+
+  late final String currentUserId;
+  final followService = FollowService();
+
+  @override
   @override
   void initState() {
     super.initState();
-    fetchCurrentUserProfile(widget.userId);
+    final user = FirebaseAuth.instance.currentUser!;
+    currentUserId = user.uid;
+
+
+    isMe = (widget.userId == currentUserId);
+
+    fetchUserProfile(widget.userId);
+    if (!isMe) checkFollowState(); // 自分のページならフォロー判定しない
   }
 
-  Future<void> fetchCurrentUserProfile(userId) async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return;
-
-    final doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .get();
-
+  Future<void> fetchUserProfile(String? userId) async {
+    final doc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
     if (!doc.exists) return;
 
     final data = doc.data()!;
@@ -48,6 +56,27 @@ class _UserHomeProfileState extends State<UserHomeProfile> {
       accountId = data['accountID'];
       bio = data['bio'];
     });
+  }
+
+  Future<void> checkFollowState() async {
+    final snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUserId)
+        .collection('following')
+        .doc(widget.userId)
+        .get();
+
+    setState(() => isFollowing = snap.exists);
+  }
+
+  Future<void> toggleFollow() async {
+    if (isFollowing) {
+      await followService.unfollow(currentUserId, widget.userId!);
+    } else {
+      await followService.follow(currentUserId, widget.userId!);
+    }
+
+    setState(() => isFollowing = !isFollowing);
   }
 
   @override
@@ -138,26 +167,49 @@ class _UserHomeProfileState extends State<UserHomeProfile> {
               padding: EdgeInsets.only(left: 30.0, right: 30.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 10), // inner padding
+                children: [
+
+                  // 自分のプロフィール → Edit Profile
+                  if (isMe)
+                    TextButton(
+                      onPressed: () {
+                        // プロフィール編集ページへ遷移など
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.grey,
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 10),
+                      ),
+                      child: const Text("Edit Profile"),
+                    )
+
+                  // 他ユーザー → Follow / Unfollow
+                  else
+                    TextButton(
+                      onPressed: toggleFollow,
+                      style: TextButton.styleFrom(
+                        backgroundColor: isFollowing ? Colors.grey : Colors.blue,
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 10),
+                      ),
+                      child: Text(
+                        isFollowing ? "Unfollow" : "Follow",
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
-                    child: Text("Follow", style: appTextStyleEn(color: Colors.white),),
-                  ),
-                  SizedBox(width: 8.0,),
+
+                  const SizedBox(width: 8),
+
+                  // 友達ボタン（今は仮）
                   TextButton(
                     onPressed: () {},
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.orange,
-                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10), // inner padding
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                     ),
-                    child: Text("Friends", style: appTextStyleEn(color: Colors.white),),
+                    child: const Text("Friends"),
                   ),
-                  SizedBox(width: 12.0,),
-                  Icon(FontAwesomeIcons.envelope, size: 30.0, color: Colors.grey[700],),
+
+                  const SizedBox(width: 12),
+                  const Icon(FontAwesomeIcons.envelope),
                 ],
               ),
             ), // FollowButton //TextButton
