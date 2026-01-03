@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:timo/constants.dart';
+import 'package:timo/screen/blanc_page.dart';
 import 'package:timo/screen/pet_list_page.dart';
 import 'package:timo/screen/user_list_page.dart';
 import 'package:timo/screen/userHomeProfile.dart';
@@ -39,9 +40,9 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     final pages = [
       UserHomeProfile(key:ValueKey(_targetUserId), userId: _targetUserId!),
-      PetListPage(userId: currentUserId),
-      PetListPage(userId: currentUserId),
-      PetListPage(userId: currentUserId),
+      BlancPage(),
+      BlancPage(),
+      BlancPage(),
       UserListPage(onAvatarTap: _openProfile), // ← コールバックで切替
     ];
 
